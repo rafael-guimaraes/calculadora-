@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calculadora Hello Kitty</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+div class="container">
+      <input type="text" class="display" readonly/>
+      <div class="buttons">
+       <button onclick="appendValue('%')">%</button>
+      <button onclick="clearEntry()">CE</button>
+      <button onclick="clearAll()">C</button>
+      <button onclick="backspace()">←</button>
+      <button onclick="calculateInverse()">1/x</button>
+      <button onclick="calculateSquare()">x²</button>
+      <button onclick="calculateSquareRoot()">√x</button>
+      <button onclick="appendOperator('/')">/</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendOperator('*')">X</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendOperator('-')">-</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendOperator('+')">+</button>
+      <button onclick="toggleSign()">+/-</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendDecimal()">,</button>
+      <button onclick="calculate()">=</button>
+        
+      </div>
+    </div>
+   
+  
+  <script>
+    let displayValue = '0';
+    let lastOperation = null;
+    let lastValue = null;
+    let calculated = false;
+
+    function updateDisplay() {
+      document.querySelector('.display').textContent = displayValue;
+    }
+
+    function appendValue(value) {
+      if (calculated) {
+        displayValue = '0';
+        calculated = false;
+      }
+      if (displayValue === '0' && value !== ',') {
+        displayValue = '';
+      }
+      displayValue += value;
+      updateDisplay();
+    }
+
+    function clearEntry() {
+      displayValue = '0';
+      updateDisplay();
+    }
+
+    function clearAll() {
+      displayValue = '0';
+      lastOperation = null;
+      lastValue = null;
+      calculated = false;
+      updateDisplay();
+    }
+
+    function backspace() {
+      displayValue = displayValue.slice(0, -1);
+      if (displayValue === '') {
+        displayValue = '0';
+      }
+      updateDisplay();
+    }
+
+    function calculateInverse() {
+      displayValue = (1 / parseFloat(displayValue)).toString();
+      updateDisplay();
+    }
+
+    function calculateSquare() {
+      displayValue = (parseFloat(displayValue) ** 2).toString();
+      updateDisplay();
+    }
+
+    function calculateSquareRoot() {
+      displayValue = (Math.sqrt(parseFloat(displayValue))).toString();
+      updateDisplay();
+    }
+
+    function toggleSign() {
+      displayValue = (-parseFloat(displayValue)).toString();
+      updateDisplay();
+    }
+
+    function appendDecimal() {
+      if (!displayValue.includes(',')) {
+        displayValue += ',';
+      }
+      updateDisplay();
+    }
+
+    function appendOperator(operator) {
+      if (lastOperation !== null && !calculated) {
+        calculate();
+      }
+      lastOperation = operator;
+      lastValue = parseFloat(displayValue);
+      calculated = false;
+      displayValue = '0';
+    }
+
+    function calculate() {
+      if (lastOperation !== null) {
+        const currentValue = parseFloat(displayValue);
+        switch (lastOperation) {
+          case '+':
+            displayValue = (lastValue + currentValue).toString();
+            break;
+          case '-':
+            displayValue = (lastValue - currentValue).toString();
+            break;
+          case '*':
+            displayValue = (lastValue * currentValue).toString();
+            break;
+          case '/':
+            displayValue = (lastValue / currentValue).toString();
+            break;
+        }
+        lastOperation = null;
+        lastValue = null;
+        calculated = true;
+        updateDisplay();
+      }
+    }
+  </script>
+</body>
+</html>
+
+
