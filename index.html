@@ -8,146 +8,198 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-      <input type="text" class="display" readonly/>
-      <div class="buttons">
-      <button class="opeator" onclick="porcentagem()">%</button>
-      <button class="opertor"  onclick="clearEntry()">CE</button>
-      <button class="opertor"  onclick="clearAll()">C</button>
-      <button class="operatr"  onclick="backspace()">←</button>
-      <button class="opertor"  onclick="calculateInverse()">1/x</button>
-      <button class="operaor"  onclick="calculateSquare()">x²</button>
-      <button class="opertor"  onclick="calculateSquareRoot()">√x</button>
-      <button class="opertor"  onclick="appendOperator('/')">/</button>
-      <button onclick="appendValue('7')">7</button>
-      <button onclick="appendValue('8')">8</button>
-      <button onclick="appendValue('9')">9</button>
-      <button class="opeator"  onclick="appendOperator('*')">X</button>
-      <button onclick="appendValue('4')">4</button>
-      <button onclick="appendValue('5')">5</button>
-      <button onclick="appendValue('6')">6</button>
-      <button class="opertor"  onclick="appendOperator('-')">-</button>
-      <button onclick="appendValue('1')">1</button>
-      <button onclick="appendValue('2')">2</button>
-      <button onclick="appendValue('3')">3</button>
-      <button class="operatr"  onclick="appendOperator('+')">+</button>
-      <button class="opertor"  onclick="toggleSign()">+/-</button>
-      <button onclick="appendValue('0')">0</button>
-      <button class="opertor"  onclick="appendDecimal()">,</button>
-      <button class="operator"  onclick="calculate()">=</button>
-        
-      </div>
+  <div class="container">
+    <div class="display">0</div>
+    <div class="botoes">
+      <button onclick="porcentagem()">%</button>
+      <button onclick="excluir()">CE</button>
+      <button onclick="limpar()">C</button>
+      <button onclick="voltar()">←</button>
+      <button onclick="inverter()">1/x</button>
+      <button onclick="quadrado()">x²</button>
+      <button onclick="raizQuadrada()">√x</button>
+      <button onclick="calcular('/')">/</button>
+      <button onclick="numeros('7')">7</button>
+      <button onclick="numeros('8')">8</button>
+      <button onclick="numeros('9')">9</button>
+      <button onclick="calcular('*')">X</button>
+      <button onclick="numeros('4')">4</button>
+      <button onclick="numeros('5')">5</button>
+      <button onclick="numeros('6')">6</button>
+      <button onclick="calcular('-')">-</button>
+      <button onclick="numeros('1')">1</button>
+      <button onclick="numeros('2')">2</button>
+      <button onclick="numeros('3')">3</button>
+      <button onclick="calcular('+')">+</button>
+      <button onclick="trocar()">+/-</button>
+      <button onclick="zero()">0</button>
+      <button onclick="virgula()">,</button>
+      <button onclick="calcular('=')">=</button>
     </div>
-   
-  
+  </div>
+
   <script>
-    let displayValue = '0';
-    let lastOperation = null;
-    let lastValue = null;
-    let calculated = false;
-
-    function updateDisplay() {
-      document.querySelector('.display').value = displayValue;
+    var tamanho = 0
+    var texto = ""
+    var operador = ""
+    var numero_anterior = 0
+    var calculado = false
+    function atualizarDisplay(){
+      document.querySelector('.display').textContent = texto;
+      
     }
-
-    function appendValue(value) {
-      if (calculated) {
-        displayValue = '0';
-        calculated = false;
+    function voltar(){
+      if (tamanho > 1){
+        texto = texto.substr(0, tamanho - 1)
+        tamanho--
       }
-      if (displayValue === '0' && value !== ',') {
-        displayValue = '';
+      if (texto == "-" || tamanho <= 1){
+        texto = "0"
+        tamanho = 0
       }
-      displayValue += value;
-      updateDisplay();
+      calculado = false
+      atualizarDisplay() 
     }
-
-    function clearEntry() {
-      displayValue = '0';
-      updateDisplay();
+    function excluir(){
+      texto = "0";
+      tamanho = 0;
+      calculado = false
+      atualizarDisplay()
     }
-
-    function clearAll() {
-      displayValue = '0';
-      lastOperation = null;
-      lastValue = null;
-      calculated = false;
-      updateDisplay();
+    function limpar(){
+      operador = "";
+      texto = "0";
+      tamanho = 0;
+      numero_anterior = 0;
+      calculado = false
+      atualizarDisplay()
     }
-
-    function backspace() {
-      displayValue = displayValue.slice(0, -1);
-      if (displayValue === '' || displayValue == '-') {
-        displayValue = '0';
+    function trocar(){
+      var numero = parseFloat(texto);
+      if (numero < 0)
+          tamanho--;
+      else if (numero > 0)
+          tamanho++;
+      numero *= -1;
+      calculado = false
+      texto = numero.toString();
+      atualizarDisplay()
+    }
+    function numeros(numero){
+      if (tamanho == 0)
+        texto = numero.toString()
+      else
+        texto += numero
+       calculado = false
+      tamanho++
+      atualizarDisplay()
+    }
+    function zero(){
+      if (tamanho != 0)
+      {
+        calculado = false
+        texto += "0";
+        tamanho++;
       }
-      updateDisplay();
+      atualizarDisplay()
     }
-    function porcentagem() {
-      displayValue = parseFloat(displayValue).toString() / 100;
-      updateDisplay();
-    }
-    function calculateInverse() {
-      displayValue = (1 / parseFloat(displayValue)).toString();
-      updateDisplay();
-    }
-
-    function calculateSquare() {
-      displayValue = (parseFloat(displayValue) ** 2).toString();
-      updateDisplay();
-    }
-
-    function calculateSquareRoot() {
-      displayValue = (Math.sqrt(parseFloat(displayValue))).toString();
-      updateDisplay();
-    }
-
-    function toggleSign() {
-      displayValue = (-parseFloat(displayValue)).toString();
-      updateDisplay();
-    }
-
-    function appendDecimal() {
-      if (!displayValue.includes(',')) {
-        displayValue += ',';
+    function inverter(){
+      var numero = parseFloat(texto)
+      if (numero != 0)
+      {
+        numero = 1 / numero;
+        texto = numero.toString()
       }
-      updateDisplay();
+      else
+          texto = "ERRO Matemático";
+      tamanho = 0;
+      calculado = false
+      atualizarDisplay()
     }
-
-    function appendOperator(operator) {
-      if (lastOperation !== null && !calculated) {
-        calculate();
+    function virgula(){
+      
+      if (!texto.includes(',') && !calculado){
+        texto += ",";
+        tamanho++;
+        calculado = false
+        atualizarDisplay();
       }
-      lastOperation = operator;
-      lastValue = parseFloat(displayValue);
-      calculated = false;
-      displayValue = '0';
+      
     }
-
-    function calculate() {
-      if (lastOperation !== null) {
-        const currentValue = parseFloat(displayValue);
-        switch (lastOperation) {
-          case '+':
-            displayValue = (lastValue + currentValue).toString();
-            break;
-          case '-':
-            displayValue = (lastValue - currentValue).toString();
-            break;
-          case '*':
-            displayValue = (lastValue * currentValue).toString();
-            break;
-          case '/':
-            displayValue = (lastValue / currentValue).toString();
-            break;
-        }
-        lastOperation = null;
-        lastValue = null;
-        calculated = true;
-        updateDisplay();
+    function porcentagem(){
+      var numero = parseFloat(texto);
+      numero /= 100
+      texto = numero.toString()
+      calculado = false
+      atualizarDisplay()
+    }
+    function raizQuadrada(){
+      var numero = parseFloat(texto)
+      if (numero >= 0)
+      {
+        numero = Math.sqrt(numero)
+        texto = numero.toString()
       }
+      else
+        texto = "ERRO Matemático";
+      tamanho = 0;
+      calculado = false
+      atualizarDisplay()
+    }
+    function quadrado(){
+      var numero = parseFloat(texto)
+      if (numero >= 0)
+      {
+        numero = numero * numero
+        texto = numero.toString()
+      }
+      else
+          texto = "ERRO Matemático";
+      tamanho = 0;
+      calculado = false
+      atualizarDisplay()
+    }
+    
+    function calcular(entrada){
+      if (operador == "" && entrada != "="){
+        numero_anterior = parseFloat(texto)
+        operador = entrada
+        texto = 0
+        tamanho = 0
+        return;
+      }
+      if (operador == "" && entrada == "="){
+        return;
+      }
+      numero = parseFloat(texto)
+      switch (operador){
+        case "+":
+          numero_anterior += numero
+          break;
+        case "-":
+          numero_anterior -= numero
+          break;
+        case "*":
+          numero_anterior *= numero
+          break;
+        case "/":
+          if (numero == 0){
+            texto = "ERRO Matemático"
+            tamanho = 0
+            return;
+          }
+          numero_anterior /= numero
+          break;
+      }
+      if (entrada == "=")
+        operador = ""
+      else
+        operador = entrada
+      texto = numero_anterior.toString()
+      tamanho = 0;
+      calculado = true
+      atualizarDisplay()
     }
   </script>
 </body>
 </html>
-
-
