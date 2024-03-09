@@ -32,7 +32,7 @@ body {
   margin-bottom: 10px;
   font-size: 40px;
   padding: 10px;
-  background: #7469B6;
+  background: #FFE6E6;
   border-radius: 12px;
   pointer-events: none;
 }
@@ -53,5 +53,5 @@ body {
   transform: scale(0.99);
 }
 .operator {
-  color: #2f9fff;
+  color: #7469B6;
 }
