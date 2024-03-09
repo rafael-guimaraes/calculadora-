@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="display">0</div>
+    <input class="display">
     <div class="buttons">
       <button onclick="porcentagem()">%</button>
       <button onclick="excluir()">CE</button>
@@ -45,7 +45,7 @@
     var numero_anterior = 0
     var calculado = false
     function atualizarDisplay(){
-      document.querySelector('.display').textContent = texto;
+      document.querySelector('.display').value = texto;
       
     }
     function voltar(){
