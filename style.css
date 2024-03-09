@@ -20,7 +20,7 @@ body {
   width: 100%;
   border-radius: 12px;
   padding: 20px;
-  background: #7469B6;
+  background: #FF1D8E;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 .display {
@@ -32,7 +32,7 @@ body {
   margin-bottom: 10px;
   font-size: 40px;
   padding: 10px;
-  background: #FF1D8E;
+  background: #7469B6;
   border-radius: 12px;
   pointer-events: none;
 }
