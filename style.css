@@ -30,7 +30,8 @@ body {
   border: none;
   text-align: right;
   margin-bottom: 10px;
-  font-size: 25px;
+  font-size: 40px;
+  padding: 10px;
   background: #FFE6E6;
   border-radius: 12px;
   pointer-events: none;
