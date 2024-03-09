@@ -31,7 +31,8 @@ body {
   text-align: right;
   margin-bottom: 10px;
   font-size: 25px;
-  color: #FFE6E6;
+  background: #FFE6E6;
+  border-radius: 12px;
   pointer-events: none;
 }
 .buttons {
