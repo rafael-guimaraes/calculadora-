@@ -53,5 +53,5 @@ body {
   transform: scale(0.99);
 }
 .operator {
-  background: #7469B6;
+  background: #7469B6 !important;
 }
