@@ -11,7 +11,7 @@
 <div class="container">
       <input type="text" class="display" readonly/>
       <div class="buttons">
-       <button onclick="appendValue('%')">%</button>
+      <button onclick="porcentagem()">%</button>
       <button onclick="clearEntry()">CE</button>
       <button onclick="clearAll()">C</button>
       <button onclick="backspace()">←</button>
@@ -77,12 +77,15 @@
 
     function backspace() {
       displayValue = displayValue.slice(0, -1);
-      if (displayValue === '') {
+      if (displayValue === '' || displayValue == '-') {
         displayValue = '0';
       }
       updateDisplay();
     }
-
+    function porcentagem() {
+      displayValue = parseFloat(displayValue)).toString() / 100;
+      updateDisplay();
+    }
     function calculateInverse() {
       displayValue = (1 / parseFloat(displayValue)).toString();
       updateDisplay();
